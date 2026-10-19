@@ -1,1 +1,2316 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta name="theme-color" content="#060918">
+
+  <meta
+    name="description"
+    content="thoEdge — explore Boards, JEE, Engineering, Tech Skills, GATE and Career learning hubs."
+  >
+
+  <title>thoEdge | Learn Beyond Limits</title>
+
+  <style>
+    /* =========================================
+       1. GLOBAL SETTINGS
+    ========================================= */
+
+    :root {
+      --bg: #060918;
+      --bg-light: #0b1022;
+      --card: #10172a;
+
+      --cyan: #50eaff;
+      --blue: #648cff;
+      --purple: #a879ff;
+      --pink: #ff79c8;
+      --gold: #ffd779;
+      --green: #74ffd2;
+
+      --text: #f5f7ff;
+      --muted: #a7b1cc;
+
+      --border: rgba(255, 255, 255, 0.11);
+
+      /* Total intro length (keep in sync with INTRO_DURATION in JS) */
+      --intro-time: 2.8s;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 85px;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+
+      color: var(--text);
+
+      font-family:
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+      line-height: 1.6;
+
+      background:
+        radial-gradient(
+          circle at 8% 8%,
+          rgba(80, 234, 255, 0.08),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 92% 24%,
+          rgba(168, 121, 255, 0.09),
+          transparent 30%
+        ),
+        var(--bg);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .container {
+      width: min(1160px, 91%);
+      margin-inline: auto;
+    }
+
+    .section {
+      padding: 85px 0;
+    }
+
+    .gradient-text {
+      color: transparent;
+
+      background: linear-gradient(
+        100deg,
+        var(--cyan),
+        var(--blue),
+        var(--purple),
+        var(--pink)
+      );
+
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .section-heading {
+      max-width: 720px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+
+      margin-bottom: 15px;
+      padding: 7px 14px;
+
+      border: 1px solid rgba(80, 234, 255, 0.25);
+      border-radius: 30px;
+
+      color: var(--cyan);
+      background: rgba(80, 234, 255, 0.05);
+
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 13px;
+
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+    }
+
+
+    /* =========================================
+       2. OPENING / HUB-TRANSITION SCREEN
+       LOGO FITTED INSIDE CIRCLE + AIRPLANE
+    ========================================= */
+
+    #intro {
+      position: fixed;
+      inset: 0;
+
+      z-index: 99999;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+
+      background:
+        radial-gradient(
+          circle at 50% 50%,
+          rgba(80, 234, 255, 0.13),
+          transparent 31%
+        ),
+        radial-gradient(
+          circle at 50% 50%,
+          rgba(168, 121, 255, 0.12),
+          transparent 55%
+        ),
+        #050816;
+
+      opacity: 1;
+      visibility: visible;
+
+      transition:
+        opacity 0.5s ease,
+        visibility 0.5s ease;
+    }
+
+    #intro.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* Moving star background */
+
+    .space-stars {
+      position: absolute;
+      inset: -100px;
+
+      pointer-events: none;
+
+      background-image:
+        radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.85) 1px,
+          transparent 1.6px
+        ),
+        radial-gradient(
+          circle,
+          rgba(80, 234, 255, 0.8) 1px,
+          transparent 1.6px
+        ),
+        radial-gradient(
+          circle,
+          rgba(168, 121, 255, 0.8) 1px,
+          transparent 1.6px
+        );
+
+      background-size:
+        83px 83px,
+        127px 127px,
+        171px 171px;
+
+      background-position:
+        0 0,
+        37px 53px,
+        72px 19px;
+
+      opacity: 0.45;
+
+      animation: starsDrift 15s linear infinite;
+    }
+
+    /* Main animation stage (perfectly centered square) */
+
+    .flight-stage {
+      position: relative;
+
+      width: 320px;
+      height: 320px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      isolation: isolate;
+    }
+
+    /* Main circular logo frame */
+
+    .flight-orbit {
+      position: relative;
+
+      width: 220px;
+      height: 220px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: 2px solid rgba(80, 234, 255, 0.85);
+      border-radius: 50%;
+
+      box-shadow:
+        0 0 20px rgba(80, 234, 255, 0.28),
+        0 0 50px rgba(80, 234, 255, 0.14),
+        inset 0 0 30px rgba(80, 234, 255, 0.1);
+
+      will-change: transform, opacity;
+
+      animation: circleEntrance 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    /* Purple orbital ring */
+
+    .flight-orbit::before {
+      content: "";
+
+      position: absolute;
+      inset: -14px;
+
+      border: 1px solid rgba(168, 121, 255, 0.65);
+      border-radius: 50%;
+
+      transform: rotate(-20deg) scaleY(0.84);
+
+      box-shadow: 0 0 20px rgba(168, 121, 255, 0.14);
+    }
+
+    /* Pink dotted orbital ring */
+
+    .flight-orbit::after {
+      content: "";
+
+      position: absolute;
+      inset: -27px;
+
+      border: 1px dashed rgba(255, 121, 200, 0.38);
+      border-radius: 50%;
+
+      transform: rotate(25deg) scaleY(0.9);
+    }
+
+    /* Glow behind logo */
+
+    .orbit-glow {
+      position: absolute;
+      inset: -6px;
+
+      z-index: 0;
+
+      border-radius: 50%;
+
+      background: radial-gradient(
+        circle,
+        rgba(80, 234, 255, 0.28),
+        rgba(168, 121, 255, 0.12) 60%,
+        transparent 76%
+      );
+
+      animation: glowPulse 2.4s ease-in-out infinite;
+    }
+
+    /* Logo disc: fills the whole circle, logo + text sit fully inside */
+
+    .orbit-logo {
+      position: absolute;
+      inset: 7px;
+
+      z-index: 2;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+
+      border-radius: 50%;
+
+      background: #ffffff;
+
+      box-shadow:
+        inset 0 0 0 1px rgba(80, 234, 255, 0.35),
+        inset 0 0 22px rgba(100, 140, 255, 0.18);
+
+      pointer-events: none;
+    }
+
+    .orbit-logo img {
+      display: block;
+
+      width: 78%;
+      height: auto;
+      max-width: 78%;
+      max-height: 78%;
+
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .orbit-logo .logo-fallback {
+      color: #0b1022;
+
+      font-size: 2rem;
+      font-weight: 950;
+      letter-spacing: -1px;
+    }
+
+    .orbit-logo .logo-fallback span {
+      color: #2f6bff;
+    }
+
+    /* Airplane orbit path (rotates around the circle) */
+
+    .aircraft-path {
+      position: absolute;
+      inset: -29px;
+
+      z-index: 5;
+
+      border-radius: 50%;
+
+      will-change: transform;
+
+      animation: airplaneOrbit var(--intro-time) cubic-bezier(0.45, 0, 0.35, 1) forwards;
+    }
+
+    /* Airplane holder: sits exactly on the path edge, nose along the flight direction */
+
+    .aircraft {
+      position: absolute;
+
+      top: 50%;
+      right: 0;
+
+      width: 30px;
+      height: 30px;
+
+      transform: translate(50%, -50%) rotate(180deg);
+    }
+
+    /* Plane + tail move together during take-off */
+
+    .plane-fly {
+      position: relative;
+
+      width: 100%;
+      height: 100%;
+
+      will-change: transform, opacity;
+
+      animation: planeDeparture var(--intro-time) cubic-bezier(0.5, 0, 0.9, 0.6) forwards;
+    }
+
+    .plane-fly svg {
+      position: relative;
+
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      color: #ffffff;
+
+      filter:
+        drop-shadow(0 0 4px var(--cyan))
+        drop-shadow(0 0 12px rgba(80, 234, 255, 0.8));
+    }
+
+    /* Glowing tail behind the plane */
+
+    .plane-fly::after {
+      content: "";
+
+      position: absolute;
+
+      top: 100%;
+      left: 50%;
+
+      width: 3px;
+      height: 46px;
+
+      margin-top: -4px;
+
+      border-radius: 20px;
+
+      background: linear-gradient(
+        to bottom,
+        rgba(80, 234, 255, 0.85),
+        rgba(168, 121, 255, 0.4),
+        transparent
+      );
+
+      transform: translateX(-50%);
+
+      opacity: 0.9;
+    }
+
+    /* Animations */
+
+    @keyframes circleEntrance {
+      0% {
+        opacity: 0;
+        transform: scale(0.45) rotate(-25deg);
+      }
+
+      65% {
+        opacity: 1;
+        transform: scale(1.04) rotate(4deg);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+      }
+    }
+
+    @keyframes glowPulse {
+      0%,
+      100% {
+        opacity: 0.55;
+        transform: scale(0.96);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.04);
+      }
+    }
+
+    /* Airplane flies 1¾ turns around the circle and finishes at the top */
+
+    @keyframes airplaneOrbit {
+      0% {
+        transform: rotate(0deg);
+        opacity: 0;
+      }
+
+      8% {
+        opacity: 1;
+      }
+
+      80% {
+        transform: rotate(630deg);
+      }
+
+      100% {
+        transform: rotate(630deg);
+      }
+    }
+
+    /* Then it leaves along its flight direction and fades away */
+
+    @keyframes planeDeparture {
+      0%,
+      80% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-190px) scale(0.55);
+        opacity: 0;
+      }
+    }
+
+    @keyframes starsDrift {
+      from {
+        background-position:
+          0 0,
+          37px 53px,
+          72px 19px;
+      }
+
+      to {
+        background-position:
+          0 170px,
+          37px 305px,
+          72px 360px;
+      }
+    }
+
+
+    /* =========================================
+       3. HEADER
+       SHOW AT TOP
+       HIDE ON DOWNWARD SCROLL
+       SHOW ON UPWARD SCROLL
+    ========================================= */
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+
+      z-index: 1000;
+
+      padding: 15px 0;
+
+      background: rgba(8, 11, 24, 0.82);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+
+      transition:
+        transform 0.28s ease,
+        opacity 0.28s ease;
+    }
+
+    .site-header.header-hidden {
+      transform: translateY(-110%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wordmark {
+      font-size: 1.75rem;
+      font-weight: 950;
+      letter-spacing: -1px;
+    }
+
+    .wordmark span {
+      color: var(--cyan);
+    }
+
+
+    /* =========================================
+       4. HERO SECTION
+    ========================================= */
+
+    .hero {
+      min-height: 570px;
+
+      display: flex;
+      align-items: center;
+
+      padding: 105px 0 85px;
+
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+
+      margin-bottom: 25px;
+      padding: 9px 15px;
+
+      border: 1px solid var(--border);
+      border-radius: 30px;
+
+      background: rgba(255, 255, 255, 0.035);
+
+      color: #dce5ff;
+
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+
+      border-radius: 50%;
+
+      background: var(--green);
+
+      box-shadow: 0 0 12px var(--green);
+    }
+
+    .hero h1 {
+      margin-bottom: 22px;
+
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 950;
+
+      letter-spacing: -3px;
+      line-height: 1.08;
+    }
+
+    .hero h1 span {
+      display: block;
+    }
+
+    .hero-description {
+      max-width: 690px;
+
+      margin: auto;
+
+      color: var(--muted);
+
+      font-size: 1.08rem;
+      line-height: 1.85;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+
+      justify-content: center;
+      gap: 14px;
+
+      margin-top: 32px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      min-height: 49px;
+
+      padding: 12px 23px;
+
+      border: 1px solid transparent;
+      border-radius: 13px;
+
+      font-size: 0.92rem;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+    }
+
+    .button-primary {
+      color: #07101c;
+
+      background: linear-gradient(
+        110deg,
+        var(--cyan),
+        #8db9ff
+      );
+
+      box-shadow: 0 10px 30px rgba(80, 234, 255, 0.13);
+    }
+
+    .button-secondary {
+      color: var(--text);
+
+      background: rgba(255, 255, 255, 0.035);
+      border-color: var(--border);
+    }
+
+    .hero-note {
+      margin-top: 22px;
+
+      color: #8793b1;
+
+      font-size: 0.8rem;
+    }
+
+
+    /* =========================================
+       5. STATISTICS
+    ========================================= */
+
+    .stats {
+      padding-bottom: 30px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 15px;
+    }
+
+    .stat-card {
+      padding: 22px 12px;
+
+      text-align: center;
+
+      border: 1px solid var(--border);
+      border-radius: 18px;
+
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .stat-number {
+      display: block;
+
+      font-size: 1.8rem;
+      font-weight: 950;
+    }
+
+    .cyan {
+      color: var(--cyan);
+    }
+
+    .purple {
+      color: var(--purple);
+    }
+
+    .pink {
+      color: var(--pink);
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.83rem;
+    }
+
+
+    /* =========================================
+       6. HUB CARDS
+    ========================================= */
+
+    .hub-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+
+      gap: 22px;
+    }
+
+    .hub-card {
+      --accent: var(--cyan);
+      --accent-rgb: 80, 234, 255;
+
+      position: relative;
+
+      display: flex;
+      flex-direction: column;
+
+      min-width: 0;
+      min-height: 320px;
+
+      padding: 25px;
+
+      overflow: hidden;
+
+      border: 1px solid var(--border);
+      border-radius: 23px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.045),
+          rgba(255, 255, 255, 0.01)
+        ),
+        var(--card);
+
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
+
+      transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+
+    .hub-card::before {
+      content: "";
+
+      position: absolute;
+
+      top: -100px;
+      right: -90px;
+
+      width: 180px;
+      height: 180px;
+
+      border-radius: 50%;
+
+      background: rgba(var(--accent-rgb), 0.15);
+
+      filter: blur(40px);
+
+      pointer-events: none;
+    }
+
+    .hub-card:hover {
+      transform: translateY(-8px);
+
+      border-color: rgba(var(--accent-rgb), 0.5);
+
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    .boards {
+      --accent: var(--gold);
+      --accent-rgb: 255, 215, 121;
+    }
+
+    .jee {
+      --accent: var(--cyan);
+      --accent-rgb: 80, 234, 255;
+    }
+
+    .engineering {
+      --accent: var(--purple);
+      --accent-rgb: 168, 121, 255;
+    }
+
+    .skills {
+      --accent: var(--green);
+      --accent-rgb: 116, 255, 210;
+    }
+
+    .gate {
+      --accent: var(--pink);
+      --accent-rgb: 255, 121, 200;
+    }
+
+    .career {
+      --accent: #91aaff;
+      --accent-rgb: 145, 170, 255;
+    }
+
+    .hub-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      gap: 12px;
+
+      margin-bottom: 23px;
+    }
+
+    .hub-icon {
+      width: 58px;
+      height: 58px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: 1px solid rgba(var(--accent-rgb), 0.25);
+      border-radius: 17px;
+
+      background: rgba(var(--accent-rgb), 0.09);
+
+      color: var(--accent);
+
+      font-size: 1.65rem;
+    }
+
+    .hub-code {
+      padding: 6px 10px;
+
+      border: 1px solid rgba(var(--accent-rgb), 0.25);
+      border-radius: 9px;
+
+      color: var(--accent);
+
+      background: rgba(var(--accent-rgb), 0.05);
+
+      font-size: 0.73rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .hub-card h3 {
+      margin-bottom: 9px;
+
+      font-size: 1.35rem;
+      font-weight: 900;
+    }
+
+    .hub-card p {
+      margin-bottom: 20px;
+
+      color: var(--muted);
+
+      font-size: 0.91rem;
+      line-height: 1.8;
+    }
+
+    .hub-tags {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 7px;
+
+      margin-top: auto;
+      margin-bottom: 22px;
+    }
+
+    .hub-tag {
+      padding: 5px 9px;
+
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+
+      color: #bac4dc;
+
+      background: rgba(255, 255, 255, 0.025);
+
+      font-size: 0.71rem;
+    }
+
+    .hub-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 10px;
+
+      padding: 12px 14px;
+
+      border: 1px solid rgba(var(--accent-rgb), 0.28);
+      border-radius: 12px;
+
+      background: rgba(var(--accent-rgb), 0.055);
+
+      color: var(--accent);
+
+      font-size: 0.87rem;
+      font-weight: 850;
+
+      transition: background 0.25s ease;
+    }
+
+    .hub-link:hover {
+      background: rgba(var(--accent-rgb), 0.13);
+    }
+
+    .hub-arrow {
+      font-size: 1.2rem;
+
+      transition: transform 0.25s ease;
+    }
+
+    .hub-link:hover .hub-arrow {
+      transform: translateX(5px);
+    }
+
+
+    /* =========================================
+       7. LEARNING JOURNEY
+    ========================================= */
+
+    .journey-panel {
+      padding: 30px;
+
+      border: 1px solid var(--border);
+      border-radius: 25px;
+
+      background: linear-gradient(
+        135deg,
+        rgba(80, 234, 255, 0.045),
+        rgba(168, 121, 255, 0.055),
+        rgba(255, 121, 200, 0.035)
+      );
+    }
+
+    .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+
+      gap: 12px;
+    }
+
+    .journey-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      min-width: 0;
+
+      padding: 18px 9px;
+
+      border: 1px solid var(--border);
+      border-radius: 16px;
+
+      background: rgba(8, 11, 24, 0.55);
+
+      color: var(--text);
+
+      text-align: center;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .journey-step:hover {
+      transform: translateY(-5px);
+
+      border-color: rgba(80, 234, 255, 0.5);
+    }
+
+    .journey-number {
+      width: 37px;
+      height: 37px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin-bottom: 10px;
+
+      border-radius: 12px;
+
+      background: rgba(80, 234, 255, 0.1);
+
+      color: var(--cyan);
+
+      font-weight: 950;
+    }
+
+    .journey-step:nth-child(2) .journey-number {
+      color: var(--blue);
+      background: rgba(100, 140, 255, 0.12);
+    }
+
+    .journey-step:nth-child(3) .journey-number {
+      color: var(--purple);
+      background: rgba(168, 121, 255, 0.12);
+    }
+
+    .journey-step:nth-child(4) .journey-number {
+      color: var(--green);
+      background: rgba(116, 255, 210, 0.1);
+    }
+
+    .journey-step:nth-child(5) .journey-number {
+      color: var(--pink);
+      background: rgba(255, 121, 200, 0.1);
+    }
+
+    .journey-step:nth-child(6) .journey-number {
+      color: var(--gold);
+      background: rgba(255, 215, 121, 0.1);
+    }
+
+    .journey-step strong {
+      margin-bottom: 5px;
+
+      font-size: 0.82rem;
+    }
+
+    .journey-step small {
+      color: var(--muted);
+
+      font-size: 0.7rem;
+    }
+
+    .journey-hint {
+      margin-top: 18px;
+
+      color: #8e9ab8;
+
+      text-align: center;
+
+      font-size: 0.8rem;
+    }
+
+
+    /* =========================================
+       8. ABOUT SECTION
+    ========================================= */
+
+    .about-panel {
+      max-width: 850px;
+
+      margin: auto;
+
+      padding: clamp(25px, 5vw, 48px);
+
+      border: 1px solid var(--border);
+      border-radius: 26px;
+
+      background: rgba(255, 255, 255, 0.025);
+
+      text-align: center;
+    }
+
+    .about-symbol {
+      width: 48px;
+      height: 48px;
+
+      margin: 0 auto 22px;
+      padding: 0;
+
+      overflow: hidden;
+
+      border: 1px solid rgba(80, 234, 255, 0.35);
+      border-radius: 12px;
+
+      background: #ffffff;
+
+      box-shadow: 0 0 15px rgba(80, 234, 255, 0.18);
+    }
+
+    .about-symbol img {
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .about-panel h2 {
+      margin-bottom: 15px;
+
+      font-size: clamp(1.9rem, 5vw, 2.7rem);
+    }
+
+    .about-panel p {
+      max-width: 700px;
+
+      margin: auto;
+
+      color: var(--muted);
+
+      line-height: 1.9;
+    }
+
+    .about-highlight {
+      color: var(--cyan);
+      font-weight: 800;
+    }
+
+
+    /* =========================================
+       9. FOOTER
+    ========================================= */
+
+    .site-footer {
+      padding: 27px 0;
+
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+
+      background: rgba(5, 7, 16, 0.45);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 18px;
+    }
+
+    .footer-brand {
+      font-size: 1.1rem;
+      font-weight: 950;
+    }
+
+    .footer-brand span {
+      color: var(--cyan);
+    }
+
+    .footer-copy {
+      color: #8490ad;
+
+      font-size: 0.79rem;
+
+      text-align: center;
+    }
+
+    .back-top {
+      color: var(--cyan);
+
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+
+    /* =========================================
+       10. SCROLL REVEAL
+    ========================================= */
+
+    .reveal {
+      opacity: 0;
+
+      transform: translateY(20px);
+
+      transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    /* =========================================
+       11. TABLET RESPONSIVENESS
+    ========================================= */
+
+    @media (max-width: 950px) {
+      .hub-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .journey-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+
+    /* =========================================
+       12. MOBILE RESPONSIVENESS
+    ========================================= */
+
+    @media (max-width: 600px) {
+      .section {
+        padding: 65px 0;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 105px 0 60px;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.6rem, 11vw, 4rem);
+        letter-spacing: -2px;
+      }
+
+      .hero-description {
+        font-size: 0.97rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        max-width: 310px;
+        margin: 30px auto 0;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .stats-grid {
+        gap: 9px;
+      }
+
+      .stat-card {
+        padding: 16px 6px;
+      }
+
+      .stat-number {
+        font-size: 1.45rem;
+      }
+
+      .stat-label {
+        font-size: 0.7rem;
+      }
+
+      .hub-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hub-card {
+        min-height: 290px;
+      }
+
+      .journey-panel {
+        padding: 15px;
+      }
+
+      .journey-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+
+      .flight-stage {
+        transform: scale(0.85);
+      }
+    }
+
+
+    /* =========================================
+       13. REDUCED-MOTION ACCESSIBILITY
+    ========================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .space-stars,
+      .flight-orbit,
+      .orbit-glow,
+      .aircraft-path,
+      .plane-fly {
+        animation: none !important;
+      }
+
+      .flight-orbit {
+        opacity: 1;
+        transform: none;
+      }
+
+      .aircraft-path {
+        display: none;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =======================================
+       OPENING / HUB-TRANSITION ANIMATION
+       LOGO FITTED IN CIRCLE + AIRPLANE
+  ======================================== -->
+
+  <div id="intro" aria-label="Animated logo introduction">
+
+    <div class="space-stars"></div>
+
+    <div class="flight-stage">
+
+      <div class="flight-orbit">
+
+        <div class="orbit-glow"></div>
+
+        <!-- Logo fills the circle -->
+
+        <div class="orbit-logo">
+          <img
+            id="introLogo"
+            src="logo.png"
+            alt="thoEdge logo"
+          >
+        </div>
+
+        <div class="aircraft-path">
+          <span class="aircraft" aria-hidden="true">
+            <span class="plane-fly">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 1.5c.9 0 1.6 1 1.6 2.3v5.6l8.4 5v2.2l-8.4-2.5v4.2l2.2 1.7v1.8L12 20.9l-3.8 1.1v-1.8l2.2-1.7v-4.2L2 16.6v-2.2l8.4-5V3.8c0-1.3.7-2.3 1.6-2.3z"/>
+              </svg>
+            </span>
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =======================================
+       HEADER
+  ======================================== -->
+
+  <header class="site-header" id="siteHeader">
+
+    <div class="container header-inner">
+
+      <a href="#home" class="wordmark" aria-label="thoEdge home">
+        tho<span>Edge</span>
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <main>
+
+    <!-- =====================================
+         HERO
+    ====================================== -->
+
+    <section class="hero" id="home">
+
+      <div class="container hero-content">
+
+        <div class="hero-badge">
+          <span class="live-dot"></span>
+          Your learning journey starts here
+        </div>
+
+        <h1>
+          One Destination.
+          <span class="gradient-text">
+            Endless Possibilities.
+          </span>
+        </h1>
+
+        <p class="hero-description">
+          Welcome to thoEdge — your central destination
+          for school boards, JEE preparation, engineering,
+          technology skills, GATE and career development.
+          Choose your path and start building your future.
+        </p>
+
+        <div class="hero-actions">
+
+          <a href="#hubs" class="button button-primary">
+            Explore All Hubs →
+          </a>
+
+          <a href="#journey" class="button button-secondary">
+            Discover Your Journey ↗
+          </a>
+
+        </div>
+
+        <p class="hero-note">
+          Six learning hubs. One connected destination.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         STATS
+    ====================================== -->
+
+    <section class="stats">
+
+      <div class="container stats-grid">
+
+        <div class="stat-card reveal">
+          <span class="stat-number cyan">06</span>
+          <span class="stat-label">Dedicated Hubs</span>
+        </div>
+
+        <div class="stat-card reveal">
+          <span class="stat-number purple">01</span>
+          <span class="stat-label">Connected Platform</span>
+        </div>
+
+        <div class="stat-card reveal">
+          <span class="stat-number pink">∞</span>
+          <span class="stat-label">Possibilities to Explore</span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         SIX HUBS
+    ====================================== -->
+
+    <section class="section" id="hubs">
+
+      <div class="container">
+
+        <div class="section-heading reveal">
+
+          <span class="eyebrow">Explore thoEdge</span>
+
+          <h2>
+            Choose Your <span class="gradient-text">Hub</span>
+          </h2>
+
+          <p>
+            Choose the destination that matches your goals
+            and continue directly to its website.
+          </p>
+
+        </div>
+
+
+        <div class="hub-grid">
+
+          <!-- TBH -->
+
+          <article class="hub-card boards reveal">
+
+            <div class="hub-top">
+              <div class="hub-icon" aria-hidden="true">📚</div>
+              <span class="hub-code">TBH</span>
+            </div>
+
+            <h3>Boards Hub</h3>
+
+            <p>
+              Your destination for school subjects, board
+              examinations, revision and academic preparation.
+            </p>
+
+            <div class="hub-tags">
+              <span class="hub-tag">CBSE</span>
+              <span class="hub-tag">Study Resources</span>
+              <span class="hub-tag">Revision</span>
+            </div>
+
+            <a
+              class="hub-link"
+              data-hub="TBH"
+              href="https://thoedge.github.io/TBH/"
+            >
+              <span>Enter Boards Hub</span>
+              <span class="hub-arrow" aria-hidden="true">→</span>
+            </a>
+
+          </article>
+
+
+          <!-- TJH -->
+
+          <article class="hub-card jee reveal">
+
+            <div class="hub-top">
+              <div class="hub-icon" aria-hidden="true">⚡</div>
+              <span class="hub-code">TJH</span>
+            </div>
+
+            <h3>JEE Hub</h3>
+
+            <p>
+              Build your engineering entrance preparation
+              through concepts, problem-solving and focused practice.
+            </p>
+
+            <div class="hub-tags">
+              <span class="hub-tag">JEE Main</span>
+              <span class="hub-tag">JEE Advanced</span>
+              <span class="hub-tag">Practice</span>
+            </div>
+
+            <a
+              class="hub-link"
+              data-hub="TJH"
+              href="https://thoedge.github.io/TJH/"
+            >
+              <span>Enter JEE Hub</span>
+              <span class="hub-arrow" aria-hidden="true">→</span>
+            </a>
+
+          </article>
+
+
+          <!-- TEH -->
+
+          <article class="hub-card engineering reveal">
+
+            <div class="hub-top">
+              <div class="hub-icon" aria-hidden="true">🚀</div>
+              <span class="hub-code">TEH</span>
+            </div>
+
+            <h3>Engineering Hub</h3>
+
+            <p>
+              Explore engineering fields, scientific ideas,
+              technical concepts and the technologies shaping tomorrow.
+            </p>
+
+            <div class="hub-tags">
+              <span class="hub-tag">Engineering</span>
+              <span class="hub-tag">Science</span>
+              <span class="hub-tag">Innovation</span>
+            </div>
+
+            <a
+              class="hub-link"
+              data-hub="TEH"
+              href="https://thoedge.github.io/TEH/"
+            >
+              <span>Enter Engineering Hub</span>
+              <span class="hub-arrow" aria-hidden="true">→</span>
+            </a>
+
+          </article>
+
+
+          <!-- TSH -->
+
+          <article class="hub-card skills reveal">
+
+            <div class="hub-top">
+              <div class="hub-icon" aria-hidden="true">💻</div>
+              <span class="hub-code">TSH</span>
+            </div>
+
+            <h3>Tech Skills Hub</h3>
+
+            <p>
+              Discover programming, digital tools, technical skills
+              and practical learning resources.
+            </p>
+
+            <div class="hub-tags">
+              <span class="hub-tag">Coding</span>
+              <span class="hub-tag">Technology</span>
+              <span class="hub-tag">Projects</span>
+            </div>
+
+            <a
+              class="hub-link"
+              data-hub="TSH"
+              href="https://thoedge.github.io/TSH/"
+            >
+              <span>Enter Tech Skills Hub</span>
+              <span class="hub-arrow" aria-hidden="true">→</span>
+            </a>
+
+          </article>
+
+
+          <!-- TGH -->
+
+          <article class="hub-card gate reveal">
+
+            <div class="hub-top">
+              <div class="hub-icon" aria-hidden="true">🎯</div>
+              <span class="hub-code">TGH</span>
+            </div>
+
+            <h3>GATE Hub</h3>
+
+            <p>
+              Explore postgraduate engineering entrance preparation,
+              core subjects and structured practice.
+            </p>
+
+            <div class="hub-tags">
+              <span class="hub-tag">GATE</span>
+              <span class="hub-tag">Core Subjects</span>
+              <span class="hub-tag">Preparation</span>
+            </div>
+
+            <a
+              class="hub-link"
+              data-hub="TGH"
+              href="https://thoedge.github.io/TGH/"
+            >
+              <span>Enter GATE Hub</span>
+              <span class="hub-arrow" aria-hidden="true">→</span>
+            </a>
+
+          </article>
+
+
+          <!-- TCH -->
+
+          <article class="hub-card career reveal">
+
+            <div class="hub-top">
+              <div class="hub-icon" aria-hidden="true">🌟</div>
+              <span class="hub-code">TCH</span>
+            </div>
+
+            <h3>Career Hub</h3>
+
+            <p>
+              Explore career paths, educational opportunities,
+              skill development and your next steps toward your ambitions.
+            </p>
+
+            <div class="hub-tags">
+              <span class="hub-tag">Career Paths</span>
+              <span class="hub-tag">Skills</span>
+              <span class="hub-tag">Planning</span>
+            </div>
+
+            <a
+              class="hub-link"
+              data-hub="TCH"
+              href="https://thoedge.github.io/TCH/"
+            >
+              <span>Enter Career Hub</span>
+              <span class="hub-arrow" aria-hidden="true">→</span>
+            </a>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         LEARNING JOURNEY
+    ====================================== -->
+
+    <section class="section" id="journey">
+
+      <div class="container">
+
+        <div class="section-heading reveal">
+
+          <span class="eyebrow">Your Roadmap</span>
+
+          <h2>
+            Explore Your <span class="gradient-text">Journey</span>
+          </h2>
+
+          <p>
+            Select a step to locate its matching hub.
+          </p>
+
+        </div>
+
+
+        <div class="journey-panel reveal">
+
+          <div class="journey-grid">
+
+            <button
+              class="journey-step"
+              data-target="TBH"
+              type="button"
+            >
+              <span class="journey-number">01</span>
+              <strong>School</strong>
+              <small>Build foundations</small>
+            </button>
+
+            <button
+              class="journey-step"
+              data-target="TJH"
+              type="button"
+            >
+              <span class="journey-number">02</span>
+              <strong>Entrance</strong>
+              <small>Prepare for JEE</small>
+            </button>
+
+            <button
+              class="journey-step"
+              data-target="TEH"
+              type="button"
+            >
+              <span class="journey-number">03</span>
+              <strong>Engineering</strong>
+              <small>Explore your field</small>
+            </button>
+
+            <button
+              class="journey-step"
+              data-target="TSH"
+              type="button"
+            >
+              <span class="journey-number">04</span>
+              <strong>Tech Skills</strong>
+              <small>Learn practical skills</small>
+            </button>
+
+            <button
+              class="journey-step"
+              data-target="TGH"
+              type="button"
+            >
+              <span class="journey-number">05</span>
+              <strong>Higher Studies</strong>
+              <small>Explore GATE</small>
+            </button>
+
+            <button
+              class="journey-step"
+              data-target="TCH"
+              type="button"
+            >
+              <span class="journey-number">06</span>
+              <strong>Career</strong>
+              <small>Plan your future</small>
+            </button>
+
+          </div>
+
+          <p class="journey-hint">
+            Tap a step to find its hub above.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         ABOUT
+    ====================================== -->
+
+    <section class="section" id="about">
+
+      <div class="container">
+
+        <div class="about-panel reveal">
+
+          <div class="about-symbol">
+
+            <img
+              src="logo.png"
+              alt="thoEdge logo"
+              width="48"
+              height="48"
+            >
+
+          </div>
+
+          <h2>
+            What is <span class="gradient-text">thoEdge?</span>
+          </h2>
+
+          <p>
+            <span class="about-highlight">thoEdge</span>
+            brings different educational and skill-development
+            destinations together in one place. From school
+            preparation and engineering entrance exams to
+            technology, higher studies and career exploration,
+            every hub has its own dedicated website. Choose
+            your direction, explore and keep moving forward.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =======================================
+       FOOTER
+  ======================================== -->
+
+  <footer class="site-footer">
+
+    <div class="container footer-inner">
+
+      <a href="#home" class="footer-brand">
+        tho<span>Edge</span>
+      </a>
+
+      <p class="footer-copy">
+        © <span id="currentYear"></span> thoEdge.
+        Learn · Build · Grow.
+      </p>
+
+      <a href="#home" class="back-top">
+        Back to top ↑
+      </a>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =======================================
+       JAVASCRIPT
+  ======================================== -->
+
+  <script>
+    "use strict";
+
+    /* =======================================
+       ELEMENTS
+    ======================================== */
+
+    const intro = document.getElementById("intro");
+    const siteHeader = document.getElementById("siteHeader");
+
+    const orbit = intro.querySelector(".flight-orbit");
+    const aircraftPath = intro.querySelector(".aircraft-path");
+    const planeFly = intro.querySelector(".plane-fly");
+    const introLogo = document.getElementById("introLogo");
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    let introTimer = null;
+    let isOpeningHub = false;
+
+    // Must match --intro-time (2.8s) in the CSS.
+    const INTRO_DURATION = reduceMotion ? 700 : 2800;
+
+    const RETURN_FLAG = "thoEdgeReturnFromHub";
+
+
+    /* =======================================
+       LOGO FALLBACK
+       (shows text if logo.png is missing)
+    ======================================== */
+
+    introLogo.addEventListener("error", function () {
+      const fallback = document.createElement("div");
+      fallback.className = "logo-fallback";
+      fallback.innerHTML = "tho<span>Edge</span>";
+      introLogo.replaceWith(fallback);
+    });
+
+
+    /* =======================================
+       RESTART INTRO ANIMATIONS
+    ======================================== */
+
+    function restartAnimation(element) {
+      if (!element) return;
+
+      element.style.animation = "none";
+
+      // Force the browser to restart the animation.
+      void element.offsetWidth;
+
+      element.style.animation = "";
+    }
+
+
+    /* =======================================
+       SHOW INTRO (plays from the start)
+    ======================================== */
+
+    function showIntro() {
+      clearTimeout(introTimer);
+
+      // Make it visible instantly, then replay the animation.
+      intro.style.transition = "none";
+      intro.classList.remove("hide");
+
+      void intro.offsetWidth;
+
+      intro.style.transition = "";
+
+      restartAnimation(orbit);
+      restartAnimation(aircraftPath);
+      restartAnimation(planeFly);
+    }
+
+
+    /* =======================================
+       HIDE INTRO
+    ======================================== */
+
+    function hideIntro() {
+      clearTimeout(introTimer);
+      intro.classList.add("hide");
+    }
+
+
+    /* =======================================
+       INITIAL INTRO
+       Plays on first visit. Skipped once when
+       the visitor comes back from a hub.
+    ======================================== */
+
+    let returningFromHub = false;
+
+    try {
+      returningFromHub =
+        sessionStorage.getItem(RETURN_FLAG) === "1";
+
+      if (returningFromHub) {
+        sessionStorage.removeItem(RETURN_FLAG);
+      }
+    } catch (error) {
+      returningFromHub = false;
+    }
+
+    if (returningFromHub) {
+
+      // Coming back from a hub: show the normal website straight away.
+      intro.style.transition = "none";
+      intro.classList.add("hide");
+
+      void intro.offsetWidth;
+
+      intro.style.transition = "";
+
+    } else {
+
+      // First visit: play the animation, then reveal the website.
+      introTimer = setTimeout(hideIntro, INTRO_DURATION);
+
+    }
+
+
+    /* =======================================
+       HUB NAVIGATION
+       Animation plays every time a hub is opened
+    ======================================== */
+
+    document.addEventListener("click", function (event) {
+
+      const link = event.target.closest("a.hub-link");
+
+      if (!link) return;
+
+      /*
+        Preserve normal browser behavior for:
+        - Opening a link in a new tab
+        - Ctrl-click, Shift-click, middle-click
+      */
+
+      if (
+        event.button !== 0 ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.shiftKey ||
+        event.altKey ||
+        link.target === "_blank" ||
+        link.hasAttribute("download")
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      if (isOpeningHub) return;
+
+      isOpeningHub = true;
+
+      const destination = link.href;
+
+      // Play the logo + airplane animation again.
+      showIntro();
+
+      introTimer = setTimeout(function () {
+
+        // One-time flag so the main website appears
+        // normally when the visitor comes back.
+        try {
+          sessionStorage.setItem(RETURN_FLAG, "1");
+        } catch (error) {
+          // Navigation still works if storage is blocked.
+        }
+
+        // Normal navigation preserves browser history.
+        window.location.href = destination;
+
+      }, INTRO_DURATION);
+
+    });
+
+
+    /* =======================================
+       JOURNEY BUTTONS
+    ======================================== */
+
+    document.querySelectorAll(".journey-step").forEach(function (step) {
+
+      step.addEventListener("click", function () {
+
+        const code = step.dataset.target;
+
+        const link = document.querySelector(
+          'a.hub-link[data-hub="' + code + '"]'
+        );
+
+        if (!link) return;
+
+        const card = link.closest(".hub-card");
+
+        if (!card) return;
+
+        card.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+
+        card.animate(
+          [
+            { transform: "scale(1)" },
+            { transform: "scale(1.025)" },
+            { transform: "scale(1)" }
+          ],
+          {
+            duration: 600,
+            easing: "ease-in-out"
+          }
+        );
+
+      });
+
+    });
+
+
+    /* =======================================
+       HEADER SCROLL EFFECT
+       HIDE DOWN / SHOW UP
+    ======================================== */
+
+    let lastScrollY = window.scrollY;
+    let scrollTicking = false;
+
+    function updateHeaderOnScroll() {
+
+      const currentY = Math.max(0, window.scrollY);
+
+      if (currentY < 60) {
+
+        siteHeader.classList.remove("header-hidden");
+
+      } else if (currentY > lastScrollY + 2) {
+
+        siteHeader.classList.add("header-hidden");
+
+      } else if (currentY < lastScrollY - 2) {
+
+        siteHeader.classList.remove("header-hidden");
+
+      }
+
+      lastScrollY = currentY;
+      scrollTicking = false;
+    }
+
+    window.addEventListener(
+      "scroll",
+      function () {
+
+        if (!scrollTicking) {
+
+          window.requestAnimationFrame(updateHeaderOnScroll);
+
+          scrollTicking = true;
+        }
+
+      },
+      { passive: true }
+    );
+
+    updateHeaderOnScroll();
+
+
+    /* =======================================
+       BACK / FORWARD CACHE RESTORATION
+       Clears the overlay so the website shows
+       normally after pressing Back from a hub.
+    ======================================== */
+
+    window.addEventListener("pageshow", function (event) {
+
+      if (event.persisted) {
+
+        clearTimeout(introTimer);
+
+        intro.style.transition = "none";
+        intro.classList.add("hide");
+
+        void intro.offsetWidth;
+
+        intro.style.transition = "";
+
+        isOpeningHub = false;
+
+        try {
+          sessionStorage.removeItem(RETURN_FLAG);
+        } catch (error) {
+          // Ignore storage errors.
+        }
+
+        lastScrollY = Math.max(0, window.scrollY);
+
+        siteHeader.classList.remove("header-hidden");
+      }
+
+    });
+
+
+    /* =======================================
+       SCROLL REVEAL
+    ======================================== */
+
+    const revealElements = document.querySelectorAll(".reveal");
+
+    if ("IntersectionObserver" in window) {
+
+      const observer = new IntersectionObserver(
+        function (entries, currentObserver) {
+
+          entries.forEach(function (entry) {
+
+            if (entry.isIntersecting) {
+
+              entry.target.classList.add("visible");
+
+              currentObserver.unobserve(entry.target);
+
+            }
+
+          });
+
+        },
+        {
+          threshold: 0.12
+        }
+      );
+
+      revealElements.forEach(function (element) {
+        observer.observe(element);
+      });
+
+    } else {
+
+      revealElements.forEach(function (element) {
+        element.classList.add("visible");
+      });
+
+    }
+
+
+    /* =======================================
+       AUTOMATIC COPYRIGHT YEAR
+    ======================================== */
+
+    document.getElementById("currentYear").textContent =
+      new Date().getFullYear();
+
+  </script>
+
+</body>
+</html>
